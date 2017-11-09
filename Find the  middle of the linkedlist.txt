@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct node *pointer;
+
+struct node{
+    
+    int data;
+    pointer next;
+};
+
+typedef pointer list;
+
+list AddNode(list node,int value){
+    list node1;
+    node1=node;
+   
+    
+    if(node1==NULL){
+       
+        node1=(list)malloc(sizeof(struct node));
+        node1->data=value;
+        node1->next=NULL;
+        
+    }
+    else
+    {
+       
+        node1->next=AddNode(node1->next,value);
+    }
+   return node1;
+}
+void print(list node)
+{
+    
+    while(node!=NULL){
+       
+        printf("%d ->",node->data);
+        node=node->next;
+    }
+}
+list reverse(list node)
+{
+    list temp,node1,prev;
+    node1=node;
+    prev=NULL;
+    while(node1!=NULL){
+        temp=node1->next;
+        node1->next=prev;
+        prev=node1;
+        node1=temp;
+    }
+    node=prev;
+    return node;
+    
+}
+void printMiddle(list head)
+{
+    list slownode = head;
+    list fastnode = head;
+ 
+    if (head!=NULL)
+    {
+        while (fastnode != NULL && fastnode->next != NULL)
+        {
+            fastnode = fastnode->next->next;
+            slownode = slownode->next;
+        }
+        printf("The middle element is [%d]\n\n", slownode->data);
+    }
+}
+int main() {
+  list node;
+  node=NULL;
+  node=AddNode(node,1);
+  node=AddNode(node,2);
+  node=AddNode(node,3);
+  node=AddNode(node,4);
+  //node=AddNode(node,5);
+  //node=AddNode(node,6);
+  print(node);
+   printf("\n");
+  printMiddle(node);
+  printf("\n");
+  node=reverse(node);
+  print(node);
+  
+  return 0;
+}

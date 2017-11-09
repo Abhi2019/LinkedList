@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct node *pointer;
+
+struct node{
+    
+int data;
+pointer next;
+
+};
+typedef pointer list;
+list AddNode(list node,int value){
+    list node1;
+    node1=node;
+    if(node1==NULL){
+        node1=(list)malloc(sizeof(struct node));
+        node1->next=NULL;
+        node1->data=value;
+    }
+    else{
+        node1->next=AddNode(node1->next,value);
+    }
+    
+    
+}
+void printNode(list node){
+    
+    while(node!=NULL){
+        printf("%d->",node->data);
+        node=node->next;
+    }
+}
+void SearchElement(list node,int s){
+   // printf("print");
+    int static v=0;
+    if(node->data==s && node!=NULL){
+        printf("Element is found");
+        v=1;
+    }
+    else if(node->next!=NULL){
+        SearchElement(node->next,s);
+    }
+  
+    if(node->next==NULL && v==0){
+         printf("Element is not found");
+    }
+}
+int main(){
+    
+    list node; int s=4;
+    node=NULL;
+    node=AddNode(node,1);
+    node=AddNode(node,2);
+    node=AddNode(node,3);
+    node=AddNode(node,4);
+    printNode(node);
+    SearchElement(node,s);
+    return 0;
+}
